@@ -26,7 +26,17 @@ spec:
 
       containers:
       - name: turbo-web-go
-        image: asia.gcr.io/poc-innovation-iot/turbo-web-go:1.0.2
+        image: asia.gcr.io/poc-innovation-iot/turbo-web-go:1.0.4
+        livenessProbe:
+          httpGet:
+            path: /okhealth
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+            httpGet:
+              path: /okhealth
+              port: 8080
         ports:
         - containerPort: 8080
         volumeMounts:
