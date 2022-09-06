@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbo-deployment
+  namespace: turbo-webstack
+spec:
+  selector:
+    matchLabels:
+      app: turbo-web
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: turbo-web
+    spec:
+      containers:
+      - name: turbo-web-go
+        image: asia.gcr.io/poc-innovation-iot/turbo-web-go:1.0.2
+        ports:
+        - containerPort: 8080
+        env:
+        - name: VERSION
+          valueFrom: 
+            configMapKeyRef:
+              name: turbo-web-config-map
+              key: VERSION
+        - name: APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: turbo-web-secret
+              key: APP_SECRET
