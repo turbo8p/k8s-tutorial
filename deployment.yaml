@@ -13,11 +13,18 @@ spec:
       labels:
         app: turbo-web
     spec:
+      volumes:
+        - name: vol1
+          persistentVolumeClaim:
+            claimName: turbo-web-go-pv-claim
       containers:
       - name: turbo-web-go
         image: asia.gcr.io/poc-innovation-iot/turbo-web-go:1.0.2
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - mountPath: "/tmp/mnt"
+          name: vol1
         env:
         - name: VERSION
           valueFrom: 
