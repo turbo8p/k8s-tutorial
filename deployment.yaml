@@ -17,6 +17,13 @@ spec:
         - name: vol1
           persistentVolumeClaim:
             claimName: turbo-web-go-pv-claim
+        - name: config-vol
+          configMap:
+            name: turbo-web-config-map-as-f
+        - name: secret-vol
+          secret:
+            secretName: turbo-web-secret-as-f
+
       containers:
       - name: turbo-web-go
         image: asia.gcr.io/poc-innovation-iot/turbo-web-go:1.0.2
@@ -25,6 +32,10 @@ spec:
         volumeMounts:
         - mountPath: "/tmp/mnt"
           name: vol1
+        - mountPath: "/tmp/appconfig"
+          name: "config-vol"
+        - mountPath: "/tmp/appsecret"
+          name: "secret-vol"
         env:
         - name: VERSION
           valueFrom: 
